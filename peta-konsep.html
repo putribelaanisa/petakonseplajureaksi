@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Peta Konsep Laju Reaksi</title>
+<style>
+:root{--bg:#fdf6e9;--card:#fffdf7;--tx:#2c3640;--mu:#55646d;--ink:#5b6b73;--ac:#2f4a45;--sage:#d3e6d3;--pink:#f2d3da;--blue:#d3e6f4;--lav:#e0d9f2;--peach:#fbdfc8;--ok:#2f7d4f;--no:#b8394d;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--tx);font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+main{max-width:480px;margin:0 auto;padding:14px 12px 24px}
+header{position:relative;background:var(--sage);border:2px solid var(--ink);border-radius:20px;padding:18px 16px 14px;box-shadow:0 3px 0 rgba(91,107,115,.25)}
+h1{margin:0 0 4px;font-size:1.35rem;line-height:1.25;color:var(--ac);padding-right:60px}
+header p{margin:4px 0;font-size:14px}
+.deco{position:absolute;right:10px;top:8px;width:46px;height:46px;stroke:var(--ink);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+button{font:inherit;font-size:14px;color:var(--tx);background:var(--card);border:2px solid var(--ink);border-radius:12px;padding:6px 12px;cursor:pointer}
+button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.map{background:var(--card);border:2px solid var(--ink);border-radius:20px;margin:14px 0;padding:6px}
+svg.m{width:100%;height:auto;display:block}
+.node{cursor:pointer;transition:opacity .2s}.node rect{stroke:var(--ink);stroke-width:2}.node:focus{outline:none}.node:focus rect,.node.sel rect{stroke:var(--ac);stroke-width:4}
+.node text{fill:var(--tx);font-size:11px;font-family:inherit;pointer-events:none}
+.edge{fill:none;stroke:var(--ink);stroke-width:1.8;transition:all .2s}.edge.hl{stroke:var(--no);stroke-width:3.2}
+.lab rect{fill:var(--card);stroke:var(--ink);stroke-width:1}.lab text{font-size:10.5px;fill:var(--ac);font-style:italic;font-family:inherit}
+.lab.q{cursor:pointer}.lab.q rect{fill:var(--peach);stroke-width:1.6}.lab.q text{font-style:normal;font-weight:700}
+.dim{opacity:.35}
+#panel{position:sticky;bottom:calc(8px + env(safe-area-inset-bottom,0px));background:var(--lav);border:2px solid var(--ink);border-radius:16px;padding:10px 14px;box-shadow:0 3px 0 rgba(91,107,115,.25);font-size:15px}
+#panel b{color:var(--ac)}#panel .opts{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.leg{font-size:13px;color:var(--mu);margin:6px 2px}
+</style></head><body><main>
+<header><svg class="deco" viewBox="0 0 48 48"><ellipse cx="24" cy="24" rx="19" ry="8"/><ellipse cx="24" cy="24" rx="19" ry="8" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="8" transform="rotate(120 24 24)"/><circle cx="24" cy="24" r="4" fill="#fbdfc8"/></svg>
+<h1>Peta Konsep: Laju Reaksi</h1>
+<p>Dibaca dari atas ke bawah. Kata pada garis (<i>miring</i>) adalah kata penghubung yang menjelaskan hubungan antarkonsep.</p>
+<div class="row"><button class="on" id="mE">Mode Jelajah</button><button id="mL">Mode Latih</button><button id="rs">Atur ulang</button></div></header>
+<div class="map"><svg class="m" id="svg" viewBox="-16 0 396 1100" role="img" aria-label="Peta konsep laju reaksi"><defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#5b6b73"/></marker></defs><g id="E"></g><g id="N"></g><g id="L"></g></svg></div>
+<p class="leg">Ketuk sebuah konsep untuk melihat penjelasan dan jalurnya dari “Laju Reaksi”. Peta ini disusun sebagai ringkasan konsep, bukan data eksperimen.</p>
+<div id="panel"><b>Petunjuk:</b> ketuk salah satu kotak konsep.</div>
+</main>
+<script>
+const $=id=>document.getElementById(id),NS='http://www.w3.org/2000/svg';
+const C={r:'#d3e6d3',a:'#d3e6f4',b:'#fbdfc8',f:'#e0d9f2',e:'#f2d3da'};
+const N={
+root:[100,10,180,44,'r',['Laju Reaksi'],'Menyatakan seberapa cepat konsentrasi pereaksi berkurang atau konsentrasi produk bertambah dalam selang waktu tertentu.'],
+A:[10,120,170,64,'a',['Perubahan konsentrasi','per satuan waktu'],'Laju reaksi adalah perubahan konsentrasi pereaksi atau produk dalam satuan waktu.'],
+A1:[8,250,84,84,'a',['Laju','pengurangan','pereaksi','vR = −Δ[R]/Δt'],'Tanda negatif menunjukkan konsentrasi pereaksi berkurang, sehingga laju bernilai positif.'],
+A2:[98,250,84,84,'a',['Laju','penambahan','produk','vP = +Δ[P]/Δt'],'Tanda positif menunjukkan konsentrasi produk bertambah.'],
+B:[200,120,170,64,'b',['Teori tumbukan'],'Menjelaskan bagaimana reaksi terjadi: partikel pereaksi bertumbukan. Tidak semua tumbukan menghasilkan reaksi.'],
+B1:[200,250,170,64,'b',['Tumbukan efektif'],'Tumbukan yang menghasilkan reaksi, yaitu yang memenuhi syarat energi dan orientasi.'],
+B1a:[198,380,88,64,'b',['Energi','tumbukan','cukup (≥ Ea)'],'Energi partikel harus mencapai minimal energi aktivasi.'],
+B1b:[293,380,88,64,'b',['Orientasi','tumbukan','tepat'],'Bagian partikel yang reaktif harus saling bertemu saat bertumbukan.'],
+Ea:[150,500,180,80,'b',['Energi aktivasi (Ea)','energi minimum agar','tumbukan menghasilkan','reaksi'],'Energi aktivasi adalah energi minimum agar tumbukan antarpartikel dapat menghasilkan reaksi.'],
+F:[20,640,340,56,'f',['Faktor-faktor yang','memengaruhi laju reaksi'],'Empat faktor yang dibahas: konsentrasi, luas permukaan, suhu, dan katalis.'],
+K:[2,770,88,50,'f',['Konsentrasi'],'Konsentrasi pereaksi yang lebih besar berarti lebih banyak partikel per satuan volume.'],
+L:[98,770,88,50,'f',['Luas','permukaan'],'Luas permukaan pereaksi padat yang lebih besar menyediakan lebih banyak tempat bertumbukan.'],
+S:[194,770,88,50,'f',['Suhu'],'Suhu yang lebih tinggi menaikkan energi gerak partikel.'],
+T:[290,770,88,50,'f',['Katalis'],'Katalis menyediakan jalur reaksi dengan energi aktivasi lebih rendah.'],
+E1:[2,870,88,84,'e',['Tumbukan','lebih sering','terjadi'],'Lebih banyak partikel dalam ruang yang sama membuat tumbukan lebih sering terjadi.'],
+E2:[98,870,88,84,'e',['Bidang','tumbukan','lebih luas'],'Permukaan yang lebih luas membuat lebih banyak partikel dapat bertumbukan.'],
+E3:[194,870,88,84,'e',['Energi naik,','tumbukan','efektif','bertambah'],'Lebih banyak partikel memiliki energi ≥ Ea sehingga tumbukan efektif bertambah.'],
+E4:[290,870,88,84,'e',['Energi','aktivasi','menurun'],'Dengan Ea lebih rendah, lebih banyak tumbukan mampu menghasilkan reaksi.'],
+G:[90,1040,200,44,'r',['Laju reaksi meningkat'],'Lebih banyak tumbukan efektif per satuan waktu membuat laju reaksi lebih besar.']};
+const cx=k=>N[k][0]+N[k][2]/2,bt=k=>N[k][1]+N[k][3],tp=k=>N[k][1];
+const ED=[['root','A',87,'didefinisikan sebagai'],['root','B',87,'dijelaskan oleh'],['A','A1',217,'untuk pereaksi'],['A','A2',217,'untuk produk'],['B','B1',217,'reaksi terjadi melalui'],['B1','B1a',347,'memerlukan'],['B1','B1b',347,'memerlukan'],['B1a','Ea',540,'batas minimum disebut',1],
+['root','F',0,'dipengaruhi oleh',2],['F','K',733,'meliputi'],['F','L',733,'meliputi'],['F','S',733,'meliputi'],['F','T',733,'meliputi'],['K','E1',845,'menyebabkan'],['L','E2',845,'menyebabkan'],['S','E3',845,'menyebabkan'],['T','E4',845,'menyebabkan'],['E1','G',997,'sehingga'],['E2','G',997,null],['E3','G',997,null],['E4','G',997,null]];
+const par={};ED.forEach(e=>(par[e[1]]=par[e[1]]||[]).push(e[0]));
+let sel=null,latih=false,rev=new Set();
+const mk=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);p&&p.appendChild(e);return e};
+function path(e){const[f,t,b,,m]=e;if(m==2)return`M${N.root[0]},${N.root[1]+22} H-8 V${N.F[1]+28} H${N.F[0]}`;
+if(m==1)return`M${cx(f)},${bt(f)} V${tp(t)}`;if(cx(f)==cx(t))return`M${cx(f)},${bt(f)} V${tp(t)}`;return`M${cx(f)},${bt(f)} V${b} H${cx(t)} V${tp(t)}`}
+function lpos(e){const[f,t,b,,m]=e;if(m==2)return[46,N.root[1]+22];if(m==1||cx(f)==cx(t))return[cx(t),e[1]=='G'?1019:(bt(f)+tp(t))/2];return[cx(t),(b+tp(t))/2]}
+const ed=[],lb=[];
+ED.forEach((e,i)=>{ed.push(mk('path',{class:'edge',d:path(e),'marker-end':'url(#ar)'},$('E')));
+if(e[3]){const[x,y]=lpos(e),g=mk('g',{class:'lab'},$('L')),w=e[3].length*5.4+10;mk('rect',{x:x-w/2,y:y-9,width:w,height:18,rx:9},g);const t=mk('text',{x,y:y+4,'text-anchor':'middle'},g);t.textContent=e[3];g.dataset.i=i;lb.push(g)}});
+const nd={};
+for(const k in N){const[x,y,w,h,c,L]=N[k],g=mk('g',{class:'node',tabindex:0,role:'button','aria-label':L.join(' ')},$('N'));
+mk('rect',{x,y,width:w,height:h,rx:12,fill:C[c]},g);const lh=13,s=y+h/2-(L.length-1)*lh/2+4;
+L.forEach((l,i)=>{const t=mk('text',{x:x+w/2,y:s+i*lh,'text-anchor':'middle'},g);t.textContent=l;if(k=='root'||k=='G'||(i==0&&L.length==1)){t.style.fontSize='14px';t.style.fontWeight='700'}else if(i==0&&w>100){t.style.fontWeight='700'}});
+g.onclick=()=>pick(k);g.onkeydown=e=>{if(e.key=='Enter'||e.key==' '){e.preventDefault();pick(k)}};nd[k]=g}
+function anc(k,s=new Set()){s.add(k);(par[k]||[]).forEach(p=>anc(p,s));return s}
+function pick(k){sel=k;const s=anc(k);for(const n in nd){nd[n].classList.toggle('sel',n==k);nd[n].classList.toggle('dim',!s.has(n))}
+ed.forEach((p,i)=>{const on=s.has(ED[i][0])&&s.has(ED[i][1]);p.classList.toggle('hl',on)});lb.forEach(g=>g.classList.toggle('dim',!(s.has(ED[g.dataset.i][0])&&s.has(ED[g.dataset.i][1]))));
+const path=[...s].filter(n=>n!='root').length;$('panel').innerHTML=`<b>${N[k][5].join(' ')}</b><br>${N[k][6]}`}
+function clear(){sel=null;for(const n in nd){nd[n].classList.remove('sel','dim')}ed.forEach(p=>p.classList.remove('hl'));lb.forEach(g=>g.classList.remove('dim'))}
+function renderLab(){lb.forEach(g=>{const i=g.dataset.i,e=ED[i],q=latih&&!rev.has(i);g.classList.toggle('q',q);g.querySelector('text').textContent=q?'?':e[3];const w=q?24:e[3].length*5.4+10,r=g.querySelector('rect'),x=lpos(e)[0];r.setAttribute('width',w);r.setAttribute('x',x-w/2);g.onclick=q?()=>ask(i):null})}
+function ask(i){const e=ED[i],pool=[...new Set(ED.map(x=>x[3]).filter(x=>x&&x!=e[3]))].sort(()=>Math.random()-.5).slice(0,2),o=[e[3],...pool].sort(()=>Math.random()-.5);
+$('panel').innerHTML=`<b>Kata penghubung apa yang tepat?</b><br>“${N[e[0]][5].join(' ')}” … “${N[e[1]][5].join(' ')}”<div class="opts">${o.map(x=>`<button>${x}</button>`).join('')}</div><div id="fbk"></div>`;
+$('panel').querySelectorAll('button').forEach(b=>b.onclick=()=>{if(b.textContent==e[3]){rev.add(String(i));renderLab();const n=lb.length-[...rev].filter(r=>ED[r][3]).length;$('panel').innerHTML=`<b style="color:var(--ok)">Benar!</b> “${e[3]}” menghubungkan kedua konsep. ${n?`Sisa ${n} kata penghubung.`:'<b>Semua kata penghubung sudah terbuka. Hebat!</b>'}`}else $('fbk').innerHTML=`<span style="color:var(--no)">Belum tepat.</span> Pikirkan hubungan antara kedua konsep, lalu coba lagi.`})}
+function mode(l){latih=l;$('mL').classList.toggle('on',l);$('mE').classList.toggle('on',!l);clear();if(l)rev=new Set();renderLab();$('panel').innerHTML=l?'<b>Mode Latih:</b> ketuk tanda <b>?</b> pada garis lalu pilih kata penghubung yang tepat.':'<b>Petunjuk:</b> ketuk salah satu kotak konsep.'}
+$('mE').onclick=()=>mode(false);$('mL').onclick=()=>mode(true);$('rs').onclick=()=>mode(latih);
+renderLab();
+</script></body></html>

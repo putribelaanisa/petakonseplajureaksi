@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Konsep Laju Reaksi dan Teori Tumbukan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fdf6e9;--card:#fffdf7;--soft:#fffaf0;--tx:#2c3640;--mu:#55646d;--ink:#5b6b73;--ac:#2f4a45;--bd:#c9d3c2;--R:#2f6fa8;--P:#c2610f;--ok:#2f7d4f;--no:#b8394d;--sage:#d3e6d3;--pink:#f2d3da;--blue:#d3e6f4;--lav:#e0d9f2;--peach:#fbdfc8;--cream:#fdf6e9;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--tx);font:16px/1.7 "Nunito",system-ui,-apple-system,"Segoe UI",sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+main{max-width:860px;margin:0 auto;padding:24px 16px 56px}
+section{position:relative;border:2px solid var(--ink);border-radius:22px;padding:28px 22px 22px;margin:0;box-shadow:0 3px 0 rgba(91,107,115,.25)}
+section.hero{background:var(--sage);padding:38px 24px 30px;overflow:hidden}
+section.c2{background:var(--blue)}section.c3{background:var(--peach)}section.c4{background:var(--lav)}section.c5{background:var(--pink)}section.c6{background:var(--sage)}
+.sq{display:flex;justify-content:center;color:var(--ink);padding:8px 0}.sq svg{width:120px;height:22px}
+h1{font-size:clamp(1.7rem,5.5vw,2.4rem);margin:.3em 0;line-height:1.2;font-weight:800;color:var(--ac);padding-right:56px}
+h2{font-size:1.45rem;margin:0 0 .6em;color:var(--ac);font-weight:800;display:flex;align-items:center;gap:10px;padding-right:64px}
+h2::after{content:"";flex:0 0 28px;height:5px;border-radius:3px;background:var(--ink);opacity:.45;order:3}
+h3{font-size:1.08rem;margin:1.3em 0 .4em;color:var(--ac);font-weight:800}
+.ic{width:32px;height:32px;flex:none;background:var(--card);border:2px solid var(--ink);border-radius:50%;padding:3px}.ic.s{width:24px;height:24px;vertical-align:middle;padding:2px}
+.chip{display:inline-block;background:var(--card);border:2px solid var(--ink);padding:3px 14px;border-radius:99px;font-size:13px;font-weight:600}
+.deco{position:absolute;pointer-events:none;width:46px;height:46px;stroke:var(--ink);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.d1{top:-20px;right:16px}.d2{bottom:-18px;left:18px;width:40px;height:40px}.d3{bottom:-20px;right:22px;width:38px;height:38px}
+.hero .h1{top:14px;right:14px;width:58px;height:58px}.hero .h2{bottom:12px;right:20px;width:46px;height:46px}.hero .h3{bottom:10px;right:84px;width:30px;height:30px}
+.box{border:2px dashed var(--ink);background:var(--soft);padding:10px 14px;border-radius:14px;margin:14px 0}
+.formula{font-size:1.2rem;text-align:center;margin:10px 0;overflow-x:auto;white-space:nowrap;background:var(--soft);border:2px solid var(--ink);border-radius:14px;padding:10px}
+.fr{display:inline-block;vertical-align:middle;text-align:center}.fr span{display:block;padding:0 4px}.fr span:first-child{border-bottom:1.5px solid currentColor}
+button{font:inherit;color:var(--tx);background:var(--card);border:2px solid var(--ink);border-radius:12px;padding:8px 14px;cursor:pointer}
+button:hover{background:var(--cream)}button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+canvas,svg{max-width:100%}canvas{width:100%;height:auto;display:block;background:var(--soft);border-radius:14px;border:2px solid var(--ink)}
+.grid3 svg{width:100%;height:auto;display:block}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.fig{border:2px solid var(--ink);border-radius:16px;padding:10px;background:var(--soft)}
+.fig b{display:block;margin-bottom:4px}.fig.g{background:#e6f3e8}.fig.r{background:#fbe9ec}.fig.g b{color:var(--ok)}.fig.r b{color:var(--no)}
+.fig p{margin:6px 0 0;font-size:14px}.tag{font-size:13px;color:var(--mu)}
+section>svg[role=img]{width:100%;height:auto;background:var(--soft);border:2px solid var(--ink);border-radius:14px;display:block}
+.sw{height:44px;border-radius:12px;border:2px solid var(--ink);margin:8px 0}
+input[type=range]{width:100%;max-width:420px;accent-color:#7aa58f}
+.q{border-top:2px dotted var(--ink);padding:14px 0}.q:first-of-type{border-top:0}
+.q button{display:block;width:100%;text-align:left;margin:6px 0}
+.q button.right{border-color:var(--ok);background:#d7ecd9}.q button.wrong{border-color:var(--no);background:#f7d4d9}.q button.sel{border-color:var(--ac);background:#dcd5f0}
+.fb{display:none;margin-top:6px;padding:8px 12px;border-radius:12px;background:var(--soft);border:2px solid var(--ink);font-size:15px}
+ul,ol{padding-left:22px}li{margin:4px 0}
+</style></head><body><svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="flask" viewBox="0 0 48 48"><path d="M19 5h10M21 5v14L8 40a3 3 0 0 0 3 4h26a3 3 0 0 0 3-4L27 19V5" fill="#e0d9f2"/><path d="M14 32h20l5 9a3 3 0 0 1-2 3H11a3 3 0 0 1-2-3z" fill="#f2d3da"/><circle cx="22" cy="26" r="1.6"/><circle cx="28" cy="22" r="1.2"/></symbol>
+<symbol id="tube" viewBox="0 0 48 48"><path d="M17 5h14M19 5v32a5 5 0 0 0 10 0V5" fill="#d3e6f4"/><path d="M19 26h10v11a5 5 0 0 1-10 0z" fill="#fbdfc8"/><path d="M34 12l2-3M38 18h3"/></symbol>
+<symbol id="mol" viewBox="0 0 48 48"><path d="M14 31L30 15M30 15L36 36M14 31L36 36"/><circle cx="14" cy="31" r="7" fill="#f2d3da"/><circle cx="30" cy="15" r="6" fill="#d3e6f4"/><circle cx="36" cy="36" r="7" fill="#fbdfc8"/></symbol>
+<symbol id="atom" viewBox="0 0 48 48"><ellipse cx="24" cy="24" rx="19" ry="8" fill="none"/><ellipse cx="24" cy="24" rx="19" ry="8" transform="rotate(60 24 24)"/><ellipse cx="24" cy="24" rx="19" ry="8" transform="rotate(120 24 24)"/><circle cx="24" cy="24" r="4" fill="#fbdfc8"/></symbol>
+<symbol id="star" viewBox="0 0 48 48"><path d="M24 5l5.5 12 13 1.3-9.7 8.7 2.9 12.8L24 33l-11.7 6.8 2.9-12.8L5.5 18.3l13-1.3z" fill="#fbdfc8"/></symbol>
+<symbol id="flower" viewBox="0 0 48 48"><g fill="#f2d3da"><circle cx="24" cy="11" r="7"/><circle cx="37" cy="21" r="7"/><circle cx="32" cy="37" r="7"/><circle cx="16" cy="37" r="7"/><circle cx="11" cy="21" r="7"/></g><circle cx="24" cy="26" r="6" fill="#fdf6e9"/></symbol>
+<symbol id="sq" viewBox="0 0 120 22"><path d="M3 11q9-12 18 0t18 0 18 0 18 0 18 0 18 0" fill="none" stroke-width="2.5"/></symbol>
+</defs></svg><main>
+
+<section class="hero"><svg class="deco h1"><use href="#atom"/></svg><svg class="deco h2"><use href="#flask"/></svg><svg class="deco h3"><use href="#star"/></svg><span class="chip">Kimia · SMA/MA Kelas XI · Subbab 1</span>
+<h1>Konsep Laju Reaksi dan Teori Tumbukan</h1>
+<p>Ada reaksi yang selesai dalam sekejap, ada yang butuh bertahun-tahun. Dengan memahami laju reaksi, kita dapat menjelaskan dan mengendalikan seberapa cepat suatu reaksi berlangsung, misalnya pada pembusukan makanan, korosi, hingga proses industri.</p></section>
+<div class="sq"><svg stroke="currentColor"><use href="#sq"/></svg></div><section class="c2"><svg class="deco d1"><use href="#flask"/></svg><svg class="deco d2"><use href="#mol"/></svg><svg class="deco d3"><use href="#flower"/></svg><h2><svg class="ic"><use href="#atom"/></svg><span>1. Konsep Laju Reaksi</span></h2>
+<p><b>Laju reaksi</b> menyatakan seberapa cepat konsentrasi pereaksi berkurang atau konsentrasi produk bertambah dalam selang waktu tertentu. Untuk reaksi sederhana R → P:</p>
+<div class="formula">v<sub>R</sub> = − <span class="fr"><span>Δ[R]</span><span>Δt</span></span> &nbsp;&nbsp; v<sub>P</sub> = + <span class="fr"><span>Δ[P]</span><span>Δt</span></span></div>
+<p>Tanda negatif pada pereaksi menunjukkan konsentrasinya berkurang; tanda positif pada produk menunjukkan konsentrasinya bertambah. Dengan demikian laju reaksi selalu bernilai positif.</p>
+<h3>Contoh: bromin dengan asam format</h3>
+<p>Bromin (Br₂) bereaksi dengan asam format (HCOOH). Larutan bromin berwarna cokelat kemerahan. Selama reaksi berlangsung, Br₂ terpakai sehingga warna memudar sampai larutan tidak berwarna. Jadi perubahan warna menunjukkan <b>konsentrasi Br₂ berkurang</b> seiring waktu.</p>
+<h3>Grafik konsentrasi terhadap waktu</h3>
+<div class="row"><button class="on" data-v="both">Keduanya</button><button data-v="R">Pereaksi</button><button data-v="P">Produk</button></div>
+<canvas id="g" width="640" height="330"></canvas>
+<div class="row"><label for="t">Geser waktu:</label><input id="t" type="range" min="0" max="100" value="0"></div>
+<div class="box" id="info"></div>
+<div class="sw" id="sw"></div><p class="tag">Warna di atas mengilustrasikan kepekatan Br₂ pada waktu yang dipilih.</p>
+<p class="tag"><b>Catatan:</b> grafik ini ilustratif untuk memperlihatkan pola, bukan data eksperimen dari PDF.</p>
+<div class="box"><b><svg class="ic s"><use href="#tube"/></svg> Latihan · Pertanyaan pemantik:</b>
+<ol><li>Bagaimana perubahan konsentrasi pereaksi selama reaksi berlangsung?</li><li>Bagaimana perubahan konsentrasi produk?</li><li>Bagaimana kemiringan kurva (laju) di awal dibandingkan menjelang akhir reaksi?</li></ol></div></section>
+<div class="sq"><svg stroke="currentColor"><use href="#sq"/></svg></div><section class="c3"><svg class="deco d1"><use href="#tube"/></svg><svg class="deco d2"><use href="#atom"/></svg><svg class="deco d3"><use href="#star"/></svg><h2><svg class="ic"><use href="#mol"/></svg><span>2. Teori Tumbukan</span></h2>
+<p>Reaksi kimia terjadi karena partikel pereaksi saling bertumbukan. Namun <b>tidak semua tumbukan menghasilkan reaksi</b>. Tumbukan yang menghasilkan reaksi disebut <b>tumbukan efektif</b>, yaitu tumbukan yang memenuhi dua syarat:</p>
+<ul><li>partikel memiliki <b>energi yang cukup</b> (minimal sebesar energi aktivasi), dan</li><li>partikel bertumbukan dengan <b>orientasi yang tepat</b>.</li></ul>
+<h3>Membandingkan tumbukan</h3>
+<div class="grid3" id="figs"></div>
+<p class="tag">Ilustrasi konseptual. Panjang anak panah menunjukkan besar energi partikel; titik hitam menandai bagian partikel yang harus saling bertemu agar reaksi terjadi.</p>
+<h3>Diagram energi dan energi aktivasi</h3>
+<p><b>Energi aktivasi (E<sub>a</sub>)</b> adalah energi minimum yang diperlukan agar tumbukan menghasilkan reaksi. Pereaksi harus “mendaki” penghalang energi ini sebelum berubah menjadi produk.</p>
+<svg viewBox="0 0 520 280" role="img" aria-label="Diagram energi potensial"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M50 20V240H500"/></g>
+<text x="12" y="16" font-size="13" fill="currentColor">Energi potensial</text><text x="330" y="268" font-size="13" fill="currentColor">Koordinat reaksi (jalannya reaksi) →</text>
+<path d="M60 170H130C190 170 200 60 260 60S330 200 440 200" fill="none" stroke="var(--ac)" stroke-width="4"/>
+<g stroke="var(--mu)" stroke-dasharray="5 4"><path d="M60 170H260"/><path d="M260 60H260"/><path d="M440 200H500"/><path d="M60 60H260"/></g>
+<path d="M110 170V62" stroke="var(--no)" stroke-width="3"/><path d="M110 62l-5 10h10z" fill="var(--no)"/>
+<g font-size="14" fill="currentColor"><text x="125" y="122" fill="var(--no)" font-weight="bold">Eₐ</text><text x="64" y="190">Energi pereaksi</text><text x="360" y="222">Energi produk</text><text x="268" y="52">Keadaan transisi (puncak)</text></g></svg>
+<p class="tag">Diagram konseptual; nilai energi tidak berskala.</p>
+<div class="box"><b><svg class="ic s"><use href="#star"/></svg> Konsep Penting · Hubungan:</b> semakin banyak tumbukan yang energinya ≥ E<sub>a</sub> dan berorientasi tepat, semakin banyak tumbukan efektif, sehingga reaksi berlangsung lebih cepat.</div></section>
+<div class="sq"><svg stroke="currentColor"><use href="#sq"/></svg></div><section class="c4"><svg class="deco d1"><use href="#mol"/></svg><svg class="deco d2"><use href="#flask"/></svg><svg class="deco d3"><use href="#flower"/></svg><h2><svg class="ic"><use href="#tube"/></svg><span>3. Aktivitas Pemahaman</span></h2><p>Jawab dan lihat umpan balik langsung.</p><div id="act"></div></section>
+<div class="sq"><svg stroke="currentColor"><use href="#sq"/></svg></div><section class="c5"><svg class="deco d1"><use href="#flower"/></svg><svg class="deco d2"><use href="#tube"/></svg><svg class="deco d3"><use href="#star"/></svg><h2><svg class="ic"><use href="#star"/></svg><span>4. Rangkuman</span></h2><ul>
+<li><b>Laju reaksi:</b> perubahan konsentrasi pereaksi atau produk per satuan waktu.</li>
+<li><b>Perubahan konsentrasi:</b> pereaksi berkurang (v<sub>R</sub> = −Δ[R]/Δt), produk bertambah (v<sub>P</sub> = +Δ[P]/Δt).</li>
+<li><b>Teori tumbukan:</b> reaksi terjadi akibat tumbukan antarpartikel pereaksi; tidak semua tumbukan menghasilkan reaksi.</li>
+<li><b>Tumbukan efektif:</b> energi mencukupi dan orientasi tepat.</li>
+<li><b>Energi aktivasi:</b> energi minimum agar tumbukan menghasilkan reaksi.</li></ul></section>
+<div class="sq"><svg stroke="currentColor"><use href="#sq"/></svg></div><section class="c6"><svg class="deco d1"><use href="#atom"/></svg><svg class="deco d2"><use href="#flask"/></svg><svg class="deco d3"><use href="#mol"/></svg><h2><svg class="ic"><use href="#flask"/></svg><span>5. Evaluasi Akhir</span></h2><p>Jawab kelima soal, lalu tekan <b>Periksa Jawaban</b> untuk melihat skor dan pembahasan.</p><div id="ev"></div>
+<button class="on" id="chk">Periksa Jawaban</button> <button id="rst">Ulangi</button><div class="box" id="sc" style="display:none"></div></section>
+</main>
+<script>
+const $=id=>document.getElementById(id),css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+/* grafik interaktif */
+const K=0.045,T=100;let mode='both';
+const Rf=t=>Math.exp(-K*t*1.2),Pf=t=>1-Rf(t);
+function draw(){const cv=$('g'),c=cv.getContext('2d'),W=cv.width,H=cv.height,m={l:60,r:20,t:20,b:50},t=+$('t').value;
+c.clearRect(0,0,W,H);const X=v=>m.l+v/T*(W-m.l-m.r),Y=v=>H-m.b-v*(H-m.t-m.b);
+c.strokeStyle=css('--mu');c.fillStyle=css('--mu');c.lineWidth=1;c.font='14px sans-serif';
+for(let i=0;i<=4;i++){c.globalAlpha=.25;c.beginPath();c.moveTo(m.l,Y(i/4));c.lineTo(W-m.r,Y(i/4));c.stroke();c.globalAlpha=1}
+c.beginPath();c.moveTo(m.l,m.t);c.lineTo(m.l,H-m.b);c.lineTo(W-m.r,H-m.b);c.stroke();
+c.fillText('Waktu (satuan ilustratif) →',W/2-80,H-12);c.save();c.translate(16,H/2+60);c.rotate(-Math.PI/2);c.fillText('Konsentrasi (relatif)',0,0);c.restore();
+const S=[['R',Rf,css('--R'),'[Pereaksi] (R)'],['P',Pf,css('--P'),'[Produk] (P)']];let k=0;
+S.forEach(s=>{if(mode!='both'&&mode!=s[0])return;c.strokeStyle=s[2];c.lineWidth=3.5;c.beginPath();for(let x=0;x<=T;x++){const px=X(x),py=Y(s[1](x));x?c.lineTo(px,py):c.moveTo(px,py)}c.stroke();
+c.fillStyle=s[2];c.fillRect(W-170,m.t+4+k*22,14,4);c.fillText(s[3],W-150,m.t+10+k*22);k++;
+c.beginPath();c.arc(X(t),Y(s[1](t)),7,0,7);c.fill()});
+c.strokeStyle=css('--mu');c.setLineDash([4,4]);c.beginPath();c.moveTo(X(t),m.t);c.lineTo(X(t),H-m.b);c.stroke();c.setLineDash([]);
+const r=Rf(t),sl=K*1.2*r,d={both:`Pada waktu ${t}: [R] = ${r.toFixed(2)} dan [P] = ${(1-r).toFixed(2)} (relatif). Kurva R turun sedangkan P naik; jumlah keduanya tetap 1 pada model ini.`,R:`<b>Pereaksi:</b> konsentrasinya menurun karena terpakai. Laju saat ini ≈ ${(sl*100).toFixed(1)} per 100 satuan waktu; kurva makin landai karena pereaksi makin sedikit.`,P:`<b>Produk:</b> konsentrasinya naik karena terbentuk. Awalnya naik curam, kemudian melandai saat pereaksi hampir habis.`};
+$('info').innerHTML=d[mode];$('sw').style.background=`rgba(185,55,20,${(r*.9).toFixed(2)})`}
+document.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>{mode=b.dataset.v;document.querySelectorAll('[data-v]').forEach(x=>x.classList.toggle('on',x==b));draw()});
+$('t').oninput=draw;
+/* gambar tumbukan */
+const mol=(x,y,f,s)=>`<circle cx="${x}" cy="${y}" r="16" fill="var(--R)"/><circle cx="${x+f*20}" cy="${y}" r="13" fill="var(--P)"/><circle cx="${x+f*(s?30:-8)}" cy="${y}" r="3.5" fill="#000"/>`;
+function fig(cls,title,kind,txt){let a='';
+if(kind==0)a=`<g>${mol(60,70,1,1)}${mol(220,70,-1,1)}</g><path d="M92 112h40" stroke="currentColor" stroke-width="5"/><path d="M188 112h-40" stroke="currentColor" stroke-width="5"/><text x="110" y="35" font-size="13" fill="currentColor">energi tinggi</text><text x="68" y="150" font-size="12" fill="var(--ok)">sisi reaktif saling berhadapan</text>`;
+if(kind==1)a=`<g>${mol(60,70,-1,0)}${mol(220,70,1,0)}</g><path d="M92 112h40" stroke="currentColor" stroke-width="5"/><path d="M188 112h-40" stroke="currentColor" stroke-width="5"/><text x="110" y="35" font-size="13" fill="currentColor">energi tinggi</text><text x="62" y="150" font-size="12" fill="var(--no)">sisi reaktif tidak berhadapan</text>`;
+if(kind==2)a=`<g>${mol(60,70,1,1)}${mol(220,70,-1,1)}</g><path d="M92 112h8" stroke="currentColor" stroke-width="5"/><path d="M188 112h-8" stroke="currentColor" stroke-width="5"/><text x="105" y="35" font-size="13" fill="currentColor">energi rendah</text><text x="68" y="150" font-size="12" fill="var(--no)">orientasi tepat, energi kurang</text>`;
+return `<div class="fig ${cls}"><b>${title}</b><svg viewBox="0 0 280 165" role="img" aria-label="${title}">${a}</svg><p>${txt}</p></div>`}
+$('figs').innerHTML=fig('g','Gambar 1 · Tumbukan Efektif',0,'Energi mencapai minimal E<sub>a</sub> dan orientasi tepat, sehingga partikel bereaksi membentuk produk.')+fig('r','Gambar 2 · Tumbukan Tidak Efektif',1,'Energi cukup, tetapi orientasi tidak tepat sehingga partikel hanya terpental tanpa bereaksi.')+fig('r','Gambar 3 · Tumbukan Tidak Efektif',2,'Orientasi tepat, tetapi energi kurang dari E<sub>a</sub> sehingga reaksi tidak terjadi.');
+/* soal */
+const gsvg=`<svg viewBox="0 0 260 150" style="max-width:300px"><path d="M30 10V120H250" fill="none" stroke="currentColor"/><path d="M30 25C70 80 130 108 250 114" fill="none" stroke="var(--R)" stroke-width="3.5"/><path d="M30 112C70 60 130 30 250 24" fill="none" stroke="var(--P)" stroke-width="3.5"/><text x="150" y="68" font-size="13" fill="var(--R)">Kurva A</text><text x="150" y="40" font-size="13" fill="var(--P)">Kurva B</text><text x="110" y="140" font-size="12" fill="currentColor">waktu →</text><text x="2" y="12" font-size="11" fill="currentColor">konsentrasi</text></svg>`;
+const ACT=[
+{q:'Laju reaksi menyatakan…',o:['jumlah zat yang tersisa saat reaksi selesai','perubahan konsentrasi pereaksi atau produk per satuan waktu','energi total yang dilepaskan reaksi','banyaknya tumbukan yang terjadi'],a:1,y:'Laju reaksi adalah perubahan konsentrasi per satuan waktu.',n:'Petunjuk: perhatikan rumus Δ[ ]/Δt, ada konsentrasi dan waktu.'},
+{q:'Perhatikan grafik. Kurva A dan B masing-masing menunjukkan…',h:gsvg,o:['A produk, B pereaksi','A pereaksi, B produk','keduanya pereaksi','keduanya produk'],a:1,y:'Kurva A turun (pereaksi terpakai), kurva B naik (produk terbentuk).',n:'Petunjuk: pereaksi berkurang seiring waktu, produk bertambah.'},
+{q:'Mengapa Gambar 3 (energi rendah) termasuk tumbukan tidak efektif?',o:['Orientasinya salah','Energi tumbukan kurang dari energi aktivasi','Partikelnya terlalu besar','Tumbukan tidak terjadi sama sekali'],a:1,y:'Orientasi sudah tepat, tetapi energi belum mencapai E<sub>a</sub>.',n:'Petunjuk: lihat anak panah pada Gambar 3 yang pendek, dan sisi reaktif yang berhadapan.'},
+{q:'Peran energi aktivasi dalam reaksi kimia adalah…',o:['energi minimum agar tumbukan menghasilkan reaksi','energi yang dihasilkan produk','energi yang selalu sama dengan energi pereaksi','jumlah partikel yang bertumbukan'],a:0,y:'E<sub>a</sub> adalah penghalang energi minimum yang harus dilampaui.',n:'Petunjuk: lihat puncak pada diagram energi.'}];
+const EV=[
+{q:'Pada R → P, mengapa v<sub>R</sub> ditulis −Δ[R]/Δt?',o:['Karena [R] bertambah','Karena [R] berkurang dan laju harus bernilai positif','Karena waktu berkurang','Karena produk bertambah'],a:1,w:'Δ[R] bernilai negatif sehingga diberi tanda minus agar laju positif.'},
+{q:'Pada reaksi bromin dengan asam format, warna cokelat kemerahan memudar. Ini menunjukkan…',o:['[Br₂] bertambah','[Br₂] berkurang','[HCOOH] tidak berubah dan tidak ikut bereaksi','reaksi belum dimulai'],a:1,w:'Pemudaran warna berarti Br₂ terpakai sehingga konsentrasinya berkurang.'},
+{q:'Pada grafik, kurva mana yang menggambarkan produk, dan bagaimana kemiringannya?',h:gsvg,o:['Kurva A, makin landai','Kurva B, naik curam di awal lalu melandai','Kurva A, makin curam','Kurva B, tetap lurus'],a:1,w:'Produk bertambah (kurva B); pertambahannya cepat di awal lalu melandai saat pereaksi menipis.'},
+{q:'Gambar 2 tidak menghasilkan reaksi karena…',o:['energinya terlalu rendah','orientasi tumbukannya tidak tepat','partikel tidak bertumbukan','energi aktivasi nol'],a:1,w:'Sisi reaktif tidak berhadapan sehingga tumbukan tidak efektif meskipun energinya tinggi.'},
+{q:'Pernyataan yang benar tentang energi aktivasi dan tumbukan efektif adalah…',o:['Semua tumbukan efektif','Tumbukan efektif membutuhkan energi ≥ E<sub>a</sub> dan orientasi tepat','E<sub>a</sub> tidak berkaitan dengan tumbukan','Orientasi tidak penting asal energi tinggi'],a:1,w:'Tumbukan efektif harus memenuhi kedua syarat: energi ≥ E<sub>a</sub> dan orientasi tepat.'}];
+function build(id,L,pre,instant){$(id).innerHTML=L.map((q,i)=>`<div class="q"><b>${i+1}. ${q.q}</b>${q.h||''}${q.o.map((o,k)=>`<button data-p="${pre}" data-i="${i}" data-k="${k}">${'ABCD'[k]}. ${o}</button>`).join('')}<div class="fb" id="${pre}f${i}"></div></div>`).join('')}
+build('act',ACT,'a');build('ev',EV,'e');
+const picks={};
+document.addEventListener('click',e=>{const b=e.target.closest('button[data-p]');if(!b)return;const p=b.dataset.p,i=+b.dataset.i,k=+b.dataset.k,box=b.parentElement;
+if(p=='a'){if(box.dataset.d)return;box.dataset.d=1;const q=ACT[i],f=$('af'+i);box.querySelectorAll('button').forEach((x,j)=>{if(j==q.a)x.classList.add('right');else if(j==k)x.classList.add('wrong')});f.style.display='block';f.innerHTML=k==q.a?`<b style="color:var(--ok)">Benar!</b> ${q.y}`:`<b style="color:var(--no)">Belum tepat.</b> ${q.n} Jawaban benar: ${'ABCD'[q.a]}. ${q.y}`}
+else{if(box.dataset.d)return;picks[i]=k;box.querySelectorAll('button').forEach((x,j)=>x.classList.toggle('sel',j==k))}});
+$('chk').onclick=()=>{const miss=EV.findIndex((_,i)=>picks[i]==null);if(miss>=0){$('sc').style.display='block';$('sc').innerHTML=`Soal nomor ${miss+1} belum dijawab.`;return}
+let s=0;EV.forEach((q,i)=>{const box=$('ev').children[i];box.dataset.d=1;const ok=picks[i]==q.a;if(ok)s++;box.querySelectorAll('button').forEach((x,j)=>{x.classList.remove('sel');if(j==q.a)x.classList.add('right');else if(j==picks[i])x.classList.add('wrong')});const f=$('ef'+i);f.style.display='block';f.innerHTML=`<b style="color:var(--${ok?'ok':'no'})">${ok?'Benar':'Kurang tepat'}.</b> Pembahasan: ${q.w}`});
+$('sc').style.display='block';$('sc').innerHTML=`<b>Skor kamu: ${s} dari ${EV.length}</b> (${s*20}/100). ${s>=4?'Pemahamanmu sudah baik!':'Pelajari lagi bagian teori tumbukan dan grafik, lalu coba kembali.'}`};
+$('rst').onclick=()=>{for(const k in picks)delete picks[k];build('ev',EV,'e');$('sc').style.display='none'};
+draw();
+</script></body></html>
